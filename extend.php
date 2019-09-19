@@ -15,7 +15,7 @@ use s9e\TextFormatter\Configurator;
 return [
     (new Extend\Frontend('forum'))
         ->js(__DIR__.'/js/dist/forum.js'),
-
+    new Extend\Locales(__DIR__ . '/resources/locale'),
     (new Extend\Formatter)
         ->configure(function (Configurator $config) {
             $config->Litedown;
