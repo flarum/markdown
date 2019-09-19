@@ -47,10 +47,13 @@ app.initializers.add('flarum-markdown', function(app) {
         <MarkdownButton title={tooltip('header')} icon="fas fa-heading" style={{ prefix: '### ' }} />
         <MarkdownButton title={tooltip('bold')} icon="fas fa-bold" style={{ prefix: '**', suffix: '**', trimFirst: true }} hotkey="b" />
         <MarkdownButton title={tooltip('italic')} icon="fas fa-italic" style={{ prefix: '_', suffix: '_', trimFirst: true }} hotkey="i" />
+		<MarkdownButton title={tooltip('underline')} icon="fas fa-underline" style={{ prefix: '[u]', suffix: '[/u]', trimFirst: true }} hotkey="u" />
+	    <MarkdownButton title={tooltip('strikethrough')} icon="fas fa-strikethrough" style={{ prefix: '~~', suffix: '~~', trimFirst: true }} hotkey="s" />
         <MarkdownButton title={tooltip('quote')} icon="fas fa-quote-left" style={{ prefix: '> ', multiline: true, surroundWithNewlines: true }} />
         <MarkdownButton title={tooltip('code')} icon="fas fa-code" style={{ prefix: '`', suffix: '`', blockPrefix: '```', blockSuffix: '```' }} />
         <MarkdownButton title={tooltip('link')} icon="fas fa-link" style={{ prefix: '[', suffix: '](url)', replaceNext: 'url', scanFor: 'https?://' }} />
         <MarkdownButton title={tooltip('image')} icon="fas fa-image" style={{ prefix: '![', suffix: '](src)', replaceNext: 'src', scanFor: 'https?://' }} />
+        <MarkdownButton title={tooltip('center')} icon="fas fa-align-center" style={{ prefix: '[center]', suffix: '[/center]', trimFirst: true }} hotkey="c" />
         <MarkdownButton title={tooltip('unordered_list')} icon="fas fa-list-ul" style={{ prefix: '- ', multiline: true, surroundWithNewlines: true }} />
         <MarkdownButton title={tooltip('ordered_list')} icon="fas fa-list-ol" style={{ prefix: '1. ', multiline: true, orderedList: true }} />
       </MarkdownToolbar>
