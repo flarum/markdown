@@ -18,9 +18,6 @@
         "flarum/core": "^0.1.0-beta.10"
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "0.1.x-dev"
-        },
         "flarum-extension": {
             "title": "Markdown+",
             "icon": {
