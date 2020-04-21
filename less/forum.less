@@ -5,11 +5,15 @@
  * LICENSE file that was distributed with this source code.
  */
 
-a, code {
-  .spoiler & {
-    background: #444;
-    color: transparent;
+.spoiler {
+  background: #444;
+  color: transparent;
+  a, a:link, a:visited, a:hover, a:active {
     padding: 0;
-    cursor: text;
+    color: transparent;
+    cursor: default;
+  }
+  img {
+    visibility: hidden;
   }
 }
