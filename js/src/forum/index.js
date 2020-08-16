@@ -25,19 +25,17 @@ app.initializers.add('flarum-markdown', function(app) {
     vdom.children[0].attrs.id = this.textareaId;
   });
 
-  extend(TextEditor.prototype, 'configTextarea', function(value, element, isInitialized, context) {
-    if (isInitialized) return;
-
-    const editor = new MarkdownArea(element, {
+  extend(TextEditor.prototype, 'textareaOncreate', function(value, vnode) {
+    this.editor = new MarkdownArea(element, {
       keyMap: {
         indent: ['Ctrl+m'],
         outdent: ['Ctrl+M']
       }
     });
+  });
 
-    context.onunload = function() {
-      editor.destroy();
-    };
+  extend(TextEditor.prototype, 'textareaOnremove', function (value, vnode) {
+    this.editor.destroy();
   });
 
   extend(TextEditor.prototype, 'toolbarItems', function(items) {
