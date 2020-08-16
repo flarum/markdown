@@ -11,12 +11,10 @@ import { extend } from 'flarum/extend';
 import TextEditor from 'flarum/components/TextEditor';
 import MarkdownArea from 'mdarea';
 
-import './polyfills';
 import MarkdownToolbar from './components/MarkdownToolbar';
 import MarkdownButton from './components/MarkdownButton';
 
 app.initializers.add('flarum-markdown', function(app) {
-
   let index = 1;
 
   extend(TextEditor.prototype, 'init', function() {
@@ -30,9 +28,13 @@ app.initializers.add('flarum-markdown', function(app) {
   extend(TextEditor.prototype, 'configTextarea', function(value, element, isInitialized, context) {
     if (isInitialized) return;
 
-    const editor = new MarkdownArea(element);
-    editor.disableInline();
-    editor.ignoreTab();
+    const editor = new MarkdownArea(element, {
+      keyMap: {
+        indent: ['Ctrl+m'],
+        outdent: ['Ctrl+M'],
+        inline: ['"', "'", '`']
+      }
+    });
 
     context.onunload = function() {
       editor.destroy();
