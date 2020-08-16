@@ -28,13 +28,9 @@ app.initializers.add('flarum-markdown', function(app) {
   extend(TextEditor.prototype, 'configTextarea', function(value, element, isInitialized, context) {
     if (isInitialized) return;
 
-    const editor = new MarkdownArea(element, {
-      keyMap: {
-        indent: ['Ctrl+m'],
-        outdent: ['Ctrl+M'],
-        inline: ['"', "'", '`']
-      }
-    });
+    const editor = new MarkdownArea(element);
+    editor.disableInline();
+    editor.ignoreTab();
 
     context.onunload = function() {
       editor.destroy();
