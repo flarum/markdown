@@ -17,7 +17,7 @@ import MarkdownButton from './components/MarkdownButton';
 app.initializers.add('flarum-markdown', function(app) {
   let index = 1;
 
-  extend(TextEditor.prototype, 'init', function() {
+  extend(TextEditor.prototype, 'oninit', function() {
     this.textareaId = 'textarea'+(index++);
   });
 
