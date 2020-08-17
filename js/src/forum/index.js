@@ -26,7 +26,7 @@ app.initializers.add('flarum-markdown', function(app) {
   });
 
   extend(TextEditor.prototype, 'textareaOncreate', function(value, vnode) {
-    this.editor = new MarkdownArea(element, {
+    this.editor = new MarkdownArea(vnode.dom, {
       keyMap: {
         indent: ['Ctrl+m'],
         outdent: ['Ctrl+M']
@@ -34,7 +34,7 @@ app.initializers.add('flarum-markdown', function(app) {
     });
   });
 
-  extend(TextEditor.prototype, 'textareaOnremove', function (value, vnode) {
+  extend(TextEditor.prototype, 'textareaOnremove', function () {
     this.editor.destroy();
   });
 
