@@ -33,7 +33,7 @@ app.initializers.add('flarum-markdown', function(app) {
     const editor = new MarkdownArea(element, {
       keyMap: {
         indent: ['Ctrl+m'],
-        outdent: ['Ctrl+Shift+m']
+        outdent: ['Ctrl+M']
       }
     });
 
