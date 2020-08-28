@@ -25,8 +25,8 @@ app.initializers.add('flarum-markdown', function(app) {
     vdom.children[0].attrs.id = this.textareaId;
   });
 
-  extend(TextEditor.prototype, 'oncreate', function(value, vnode) {
-    this.editor = new MarkdownArea(vnode.dom, {
+  extend(TextEditor.prototype, 'oncreate', function() {
+    this.editor = new MarkdownArea(this.$('textarea')[0], {
       keyMap: {
         indent: ['Ctrl+m'],
         outdent: ['Ctrl+M']
