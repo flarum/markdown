@@ -3,7 +3,7 @@
  * See license text at https://github.com/github/markdown-toolbar-element/blob/master/LICENSE.
  */
 
-import insertText from './insertText';
+import insertText from 'flarum/common/utils/insertText';
 import { blockStyle, isMultipleLines, multilineStyle, orderedList } from './styles';
 
 export const styleSelectedText = (textarea, styleArgs) => {
