@@ -11,6 +11,7 @@ import { extend } from 'flarum/extend';
 import TextEditor from 'flarum/common/components/TextEditor';
 import BasicEditorDriver from 'flarum/common/utils/BasicEditorDriver';
 import styleSelectedText from 'flarum/common/utils/styleSelectedText';
+import ItemList from 'flarum/common/utils/ItemList';
 
 import MarkdownToolbar from './components/MarkdownToolbar';
 import MarkdownButton from './components/MarkdownButton';
@@ -61,16 +62,26 @@ app.initializers.add('flarum-markdown', function (app) {
 
     items.add('markdown', (
       <MarkdownToolbar for={this.textareaId} setShortcutHandler={handler => shortcutHandler = handler}>
-        <MarkdownButton title={tooltip('header')} icon="fas fa-heading" onclick={makeApplyStyle('header')} />
-        <MarkdownButton title={tooltip('bold', 'b')} icon="fas fa-bold" onclick={makeApplyStyle('bold')}  />
-        <MarkdownButton title={tooltip('italic', 'i')} icon="fas fa-italic" onclick={makeApplyStyle('italic')}  />
-        <MarkdownButton title={tooltip('quote')} icon="fas fa-quote-left" onclick={makeApplyStyle('quote')} />
-        <MarkdownButton title={tooltip('code')} icon="fas fa-code" onclick={makeApplyStyle('code')} />
-        <MarkdownButton title={tooltip('link')} icon="fas fa-link" onclick={makeApplyStyle('link')} />
-        <MarkdownButton title={tooltip('image')} icon="fas fa-image" onclick={makeApplyStyle('image')} />
-        <MarkdownButton title={tooltip('unordered_list')} icon="fas fa-list-ul" onclick={makeApplyStyle('unordered_list')} />
-        <MarkdownButton title={tooltip('ordered_list')} icon="fas fa-list-ol" onclick={makeApplyStyle('ordered_list')} />
+        {markdownToolbarItems().toArray()}
       </MarkdownToolbar>
     ), 100);
   });
 });
+
+export function markdownToolbarItems() {
+  const items = new ItemList();
+
+  // Add items
+  items.add('header', <MarkdownButton title={tooltip('header')} icon="fas fa-heading" onclick={makeApplyStyle('header')} />,90);
+    items.add('bold',     <MarkdownButton title={tooltip('bold', 'b')} icon="fas fa-bold" onclick={makeApplyStyle('bold')}  />,80);
+      items.add('italics',   <MarkdownButton title={tooltip('italic', 'i')} icon="fas fa-italic" onclick={makeApplyStyle('italic')}  />,70);
+      items.add('quote',   <MarkdownButton title={tooltip('quote')} icon="fas fa-quote-left" onclick={makeApplyStyle('quote')} />,60);
+      items.add('code',   <MarkdownButton title={tooltip('code')} icon="fas fa-code" onclick={makeApplyStyle('code')} />,50);
+    items.add('link',     <MarkdownButton title={tooltip('link')} icon="fas fa-link" onclick={makeApplyStyle('link')} />,40);
+      items.add('image',   <MarkdownButton title={tooltip('image')} icon="fas fa-image" onclick={makeApplyStyle('image')} />,30);
+      items.add('unordered_list',   <MarkdownButton title={tooltip('unordered_list')} icon="fas fa-list-ul" onclick={makeApplyStyle('unordered_list')} />,20);
+      items.add('ordered_list',   <MarkdownButton title={tooltip('ordered_list')} icon="fas fa-list-ol" onclick={makeApplyStyle('ordered_list')} />, 10);
+    
+
+  return items;
+}
