@@ -39,6 +39,7 @@ const applyStyle = (id) => {
 function makeShortcut(id, key) {
   return function (e) {
     if (e.key === key && (e.metaKey && modifierKey === '⌘' || e.ctrlKey && modifierKey === 'ctrl')) {
+      e.preventDefault();
       applyStyle(id);
     }
   }
