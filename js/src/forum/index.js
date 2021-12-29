@@ -7,7 +7,8 @@
  * https://github.com/github/markdown-toolbar-element/blob/master/LICENSE
  */
 
-import { extend, override } from 'flarum/extend';
+import app from 'flarum/forum/app';
+import { extend, override } from 'flarum/common/extend';
 import TextEditor from 'flarum/common/components/TextEditor';
 import BasicEditorDriver from 'flarum/common/utils/BasicEditorDriver';
 import styleSelectedText from 'flarum/common/utils/styleSelectedText';
@@ -32,18 +33,18 @@ const styles = {
   spoiler: { prefix: '>!', suffix: '!<', blockPrefix: '>! ', multiline: true, trimFirst: true },
 };
 
-const applyStyle = (id) => {
+const applyStyle = (id, editorDriver) => {
   // This is a nasty hack that breaks encapsulation of the editor.
   // In future releases, we'll need to tweak the editor driver interface
   // to support triggering events like this.
-  styleSelectedText(app.composer.editor.el, styles[id]);
+  styleSelectedText(editorDriver.el, styles[id]);
 };
 
-function makeShortcut(id, key) {
+function makeShortcut(id, key, editorDriver) {
   return function (e) {
     if (e.key === key && ((e.metaKey && modifierKey === '⌘') || (e.ctrlKey && modifierKey === 'ctrl'))) {
       e.preventDefault();
-      applyStyle(id);
+      applyStyle(id, editorDriver);
     }
   };
 }
@@ -56,7 +57,7 @@ function markdownToolbarItems(oldFunc) {
   }
 
   const makeApplyStyle = (id) => {
-    return () => applyStyle(id);
+    return () => applyStyle(id, this.attrs.composer.editor);
   };
 
   items.add('header', <MarkdownButton title={tooltip('header')} icon="fas fa-heading" onclick={makeApplyStyle('header')} />, 1000);
@@ -84,8 +85,8 @@ function markdownToolbarItems(oldFunc) {
 
 app.initializers.add('flarum-markdown', function (app) {
   extend(BasicEditorDriver.prototype, 'keyHandlers', function (items) {
-    items.add('bold', makeShortcut('bold', 'b'));
-    items.add('italic', makeShortcut('italic', 'i'));
+    items.add('bold', makeShortcut('bold', 'b', this));
+    items.add('italic', makeShortcut('italic', 'i', this));
   });
 
   if (TextEditor.prototype.markdownToolbarItems) {
