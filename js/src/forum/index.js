@@ -7,7 +7,8 @@
  * https://github.com/github/markdown-toolbar-element/blob/master/LICENSE
  */
 
-import { extend } from 'flarum/extend';
+import app from 'flarum/forum/app';
+import { extend } from 'flarum/common/extend';
 import TextEditor from 'flarum/common/components/TextEditor';
 import BasicEditorDriver from 'flarum/common/utils/BasicEditorDriver';
 import styleSelectedText from 'flarum/common/utils/styleSelectedText';
@@ -31,26 +32,23 @@ const styles = {
   spoiler: { prefix: '>!', suffix: '!<', blockPrefix: '>! ', multiline: true, trimFirst: true },
 };
 
-const applyStyle = (id) => {
-  // This is a nasty hack that breaks encapsulation of the editor.
-  // In future releases, we'll need to tweak the editor driver interface
-  // to support triggering events like this.
-  styleSelectedText(app.composer.editor.el, styles[id]);
+const applyStyle = (id, composerElement) => {
+  styleSelectedText(composerElement, styles[id]);
 };
 
-function makeShortcut(id, key) {
+function makeShortcut(id, key, composerElement) {
   return function (e) {
     if (e.key === key && ((e.metaKey && modifierKey === '⌘') || (e.ctrlKey && modifierKey === 'ctrl'))) {
       e.preventDefault();
-      applyStyle(id);
+      applyStyle(id, composerElement);
     }
   };
 }
 
 app.initializers.add('flarum-markdown', function (app) {
   extend(BasicEditorDriver.prototype, 'keyHandlers', function (items) {
-    items.add('bold', makeShortcut('bold', 'b'));
-    items.add('italic', makeShortcut('italic', 'i'));
+    items.add('bold', makeShortcut('bold', 'b', this.el));
+    items.add('italic', makeShortcut('italic', 'i', this.el));
   });
 
   extend(TextEditor.prototype, 'toolbarItems', function (items) {
@@ -59,7 +57,7 @@ app.initializers.add('flarum-markdown', function (app) {
     };
 
     const makeApplyStyle = (id) => {
-      return () => applyStyle(id);
+      return () => applyStyle(id, this.attrs.composer.editor.el);
     };
 
     items.add(
