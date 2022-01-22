@@ -7,6 +7,7 @@
  * https://github.com/github/markdown-toolbar-element/blob/master/LICENSE
  */
 
+import app from 'flarum/common/app';
 import { extend, override } from 'flarum/common/extend';
 import TextEditor from 'flarum/common/components/TextEditor';
 import BasicEditorDriver from 'flarum/common/utils/BasicEditorDriver';
