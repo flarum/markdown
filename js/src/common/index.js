@@ -9,7 +9,6 @@
 
 import app from 'flarum/common/app';
 import { extend, override } from 'flarum/common/extend';
-import TextEditor from 'flarum/common/components/TextEditor';
 import BasicEditorDriver from 'flarum/common/utils/BasicEditorDriver';
 import styleSelectedText from 'flarum/common/utils/styleSelectedText';
 
@@ -27,6 +26,7 @@ const styles = {
   quote: { prefix: '> ', multiline: true, surroundWithNewlines: true },
   code: { prefix: '`', suffix: '`', blockPrefix: '```', blockSuffix: '```' },
   link: { prefix: '[', suffix: '](https://)', replaceNext: 'https://', scanFor: 'https?://' },
+  link_blank: { prefix: '[', suffix: '](https://){:target="_blank"}', replaceNext: 'https://', scanFor: 'https?://' },
   image: { prefix: '![', suffix: '](https://)', replaceNext: 'https://', scanFor: 'https?://' },
   unordered_list: { prefix: '- ', multiline: true, surroundWithNewlines: true },
   ordered_list: { prefix: '1. ', multiline: true, orderedList: true },
@@ -72,6 +72,7 @@ function markdownToolbarItems(oldFunc) {
   items.add('spoiler', <MarkdownButton title={tooltip('spoiler')} icon="fas fa-exclamation-triangle" onclick={makeApplyStyle('spoiler')} />, 500);
   items.add('code', <MarkdownButton title={tooltip('code')} icon="fas fa-code" onclick={makeApplyStyle('code')} />, 400);
   items.add('link', <MarkdownButton title={tooltip('link')} icon="fas fa-link" onclick={makeApplyStyle('link')} />, 300);
+  items.add('link_blank', <MarkdownButton title={tooltip('link_blank')} icon="fas fa-external-link-alt" onclick={makeApplyStyle('link_blank')} />, 290);
   items.add('image', <MarkdownButton title={tooltip('image')} icon="fas fa-image" onclick={makeApplyStyle('image')} />, 200);
   items.add(
     'unordered_list',
@@ -89,13 +90,9 @@ export function initialize(app) {
     items.add('italic', makeShortcut('italic', 'i', this));
   });
 
-  if (TextEditor.prototype.markdownToolbarItems) {
-    override(TextEditor.prototype, 'markdownToolbarItems', markdownToolbarItems);
-  } else {
-    TextEditor.prototype.markdownToolbarItems = markdownToolbarItems;
-  }
+  override('flarum/common/components/TextEditor', 'markdownToolbarItems', markdownToolbarItems);
 
-  extend(TextEditor.prototype, 'toolbarItems', function (items) {
+  extend('flarum/common/components/TextEditor', 'toolbarItems', function (items) {
     items.add(
       'markdown',
       <MarkdownToolbar for={this.textareaId} setShortcutHandler={(handler) => (shortcutHandler = handler)}>

@@ -1,0 +1,15 @@
+flarum-markdown:
+  lib:
+    composer:
+      bold_tooltip: Añadir texto en negrita
+      code_tooltip: Insertar código
+      header_tooltip: Agregar texto de encabezado
+      image_tooltip: Añadir una imagen
+      italic_tooltip: Añadir texto en cursiva
+      link_tooltip: Añadir un enlace
+      link_blank_tooltip: Añadir un enlace (se abre en una nueva pestaña)
+      ordered_list_tooltip: Agregar una lista numerada
+      quote_tooltip: Insertar una cita
+      spoiler_tooltip: Insertar un spoiler
+      strikethrough_tooltip: Agregar texto tachado
+      unordered_list_tooltip: Agregar una lista con viñetas
