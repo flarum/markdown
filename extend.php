@@ -26,6 +26,8 @@ return [
             // Overwrite the default inline spoiler so that it is compatible
             // with more styling for children in an external stylesheet.
             $config->tags['ispoiler']->template = '<span class="spoiler" data-s9e-livepreview-ignore-attrs="class" onclick="removeAttribute(\'class\')"><xsl:apply-templates/></span>';
+            // Add target="_blank" to all links
+            $config->tags['URL']->template = '<a href="{@url}" target="_blank" rel="noopener noreferrer"><xsl:apply-templates/></a>';
         }),
 
     new Extend\Locales(__DIR__.'/locale'),
