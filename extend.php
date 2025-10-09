@@ -26,8 +26,21 @@ return [
             // Overwrite the default inline spoiler so that it is compatible
             // with more styling for children in an external stylesheet.
             $config->tags['ispoiler']->template = '<span class="spoiler" data-s9e-livepreview-ignore-attrs="class" onclick="removeAttribute(\'class\')"><xsl:apply-templates/></span>';
-            // Add target="_blank" to all links
-            $config->tags['URL']->template = '<a href="{@url}" target="_blank" rel="noopener noreferrer"><xsl:apply-templates/></a>';
+
+            // Add target attribute to URL tag
+            if (isset($config->tags['URL'])) {
+                $config->tags['URL']->attributes->add('target');
+            }
+        })
+        ->render(function ($renderer, $context, $xml) {
+            // Modify the XML to add target="_blank" to all URL tags
+            $xml = preg_replace(
+                '/<URL url="([^"]*)"/',
+                '<URL url="$1" target="_blank"',
+                $xml
+            );
+
+            return $xml;
         }),
 
     new Extend\Locales(__DIR__.'/locale'),
